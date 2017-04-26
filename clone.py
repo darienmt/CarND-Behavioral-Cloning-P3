@@ -43,18 +43,38 @@ from keras.models import Sequential
 from keras.layers import Flatten, Dense, Lambda, Convolution2D
 from keras.layers.pooling import MaxPooling2D
 
-model = Sequential()
-model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
-model.add(Convolution2D(6,5,5,activation="relu"))
-model.add(MaxPooling2D())
-model.add(Convolution2D(6,5,5,activation="relu"))
-model.add(MaxPooling2D())
-model.add(Flatten())
-model.add(Dense(120))
-model.add(Dense(84))
-model.add(Dense(1))
+def createPreProcessingLayers():
+    """
+    Creates a model with the initial pre-processing layers.
+    """
+    model = Sequential()
+    model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+    return model
 
-model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=3)
+def leNetModel():
+    """
+    Creates a LeNet model.
+    """
+    model = createPreProcessingLayers()
+    model.add(Convolution2D(6,5,5,activation="relu"))
+    model.add(MaxPooling2D())
+    model.add(Convolution2D(6,5,5,activation="relu"))
+    model.add(MaxPooling2D())
+    model.add(Flatten())
+    model.add(Dense(120))
+    model.add(Dense(84))
+    model.add(Dense(1))
+    return model
 
-model.save('models/data.h5')
+def trainAndSave(model, inputs, outputs, modelFile, epochs = 3):
+    """
+    Train the model `model` using 'mse' lost and 'adam' optimizer for the epochs `epochs`.
+    The model is saved at `modelFile`
+    """
+    model.compile(loss='mse', optimizer='adam')
+    model.fit(inputs, outputs, validation_split=0.2, shuffle=True, nb_epoch=epochs)
+    model.save(modelFile)
+    print("Model saved at " + modelFile)
+
+model = leNetModel()
+trainAndSave(model, X_train, y_train, 'models/data.h5')
