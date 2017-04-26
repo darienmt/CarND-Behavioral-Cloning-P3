@@ -27,22 +27,34 @@ def loadImagesAndMeasurements(dataPath, skipHeader=False):
     measurements = []
     for line in lines:
         imagePath = line[0]
-        image = cv2.imread(dataPath + '/' + imagePath)
+        image = cv2.cvtColor(cv2.imread(dataPath + '/' + imagePath), cv2.COLOR_BGR2RGB)
         images.append(image)
         measurement = float(line[3])
         measurements.append(measurement)
+        # Flipping
+        images.append(cv2.flip(image,1))
+        measurements.append(measurement*-1.0)
+
     return (np.array(images), np.array(measurements))
 
 X_train, y_train = loadImagesAndMeasurements('data/data', skipHeader=True)
 
 from keras.models import Sequential
-from keras.layers import Flatten, Dense
+from keras.layers import Flatten, Dense, Lambda, Convolution2D
+from keras.layers.pooling import MaxPooling2D
 
 model = Sequential()
-model.add(Flatten(input_shape=(160,320,3)))
+model.add(Lambda(lambda x: (x / 255.0) - 0.5, input_shape=(160,320,3)))
+model.add(Convolution2D(6,5,5,activation="relu"))
+model.add(MaxPooling2D())
+model.add(Convolution2D(6,5,5,activation="relu"))
+model.add(MaxPooling2D())
+model.add(Flatten())
+model.add(Dense(120))
+model.add(Dense(84))
 model.add(Dense(1))
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=7)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, nb_epoch=3)
 
 model.save('models/data.h5')
