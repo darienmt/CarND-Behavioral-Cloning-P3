@@ -1,0 +1,74 @@
+digraph {
+	graph [rankdir=LR]
+	node [fontname=Helvetica]
+	edge [arrowhead=open]
+		0 [label="Lambda
+input: (160, 320, 3)
+"]
+		1 [label="Cropping2D
+cropping: ([50, 20], [0, 0])
+"]
+			0 -> 1
+		2 [label="Convolution2D
+activation: relu
+kernel: (5, 5)
+filters: 24
+strides: (2, 2)
+"]
+			1 -> 2
+		3 [label="Convolution2D
+activation: relu
+kernel: (5, 5)
+filters: 36
+strides: (2, 2)
+"]
+			2 -> 3
+		4 [label="Convolution2D
+activation: relu
+kernel: (5, 5)
+filters: 48
+strides: (2, 2)
+"]
+			3 -> 4
+		5 [label="Convolution2D
+activation: relu
+kernel: (3, 3)
+filters: 64
+strides: (1, 1)
+"]
+			4 -> 5
+		6 [label="Convolution2D
+activation: relu
+kernel: (3, 3)
+filters: 64
+strides: (1, 1)
+"]
+			5 -> 6
+		7 [label=Flatten
+]
+			6 -> 7
+		8 [label="Dense
+activation: linear
+output: 100
+input: 8448
+"]
+			7 -> 8
+		9 [label="Dense
+activation: linear
+output: 50
+input: 100
+"]
+			8 -> 9
+		10 [label="Dense
+activation: linear
+output: 10
+input: 50
+"]
+			9 -> 10
+		11 [label="Dense
+activation: linear
+output: 1
+input: 10
+"]
+			10 -> 11
+}
