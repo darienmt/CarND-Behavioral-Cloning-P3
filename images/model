@@ -12,36 +12,36 @@ cropping: ([50, 20], [0, 0])
 		subgraph {
 			20 [label="Convolution2D
 kernel: (5, 5)
+filters: 24
 activation: relu
 strides: (2, 2)
-filters: 24
 " fillcolor="#AAAAAA" fontcolor=white style=filled]
 			21 [label="Convolution2D
 kernel: (5, 5)
+filters: 36
 activation: relu
 strides: (2, 2)
-filters: 36
 " fillcolor="#AAAAAA" fontcolor=white style=filled]
 				20 -> 21
 			22 [label="Convolution2D
 kernel: (5, 5)
+filters: 48
 activation: relu
 strides: (2, 2)
-filters: 48
 " fillcolor="#AAAAAA" fontcolor=white style=filled]
 				21 -> 22
 			23 [label="Convolution2D
 kernel: (3, 3)
+filters: 64
 activation: relu
 strides: (1, 1)
-filters: 64
 " fillcolor="#AAAAAA" fontcolor=white style=filled]
 				22 -> 23
 			24 [label="Convolution2D
 kernel: (3, 3)
+filters: 64
 activation: relu
 strides: (1, 1)
-filters: 64
 " fillcolor="#AAAAAA" fontcolor=white style=filled]
 				23 -> 24
 		}
