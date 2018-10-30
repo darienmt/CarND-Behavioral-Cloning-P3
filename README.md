@@ -6,7 +6,7 @@ Udacity Self Driving Car Nanodegree - Behavioral Cloning
 
 To run this project, you need [Miniconda](https://conda.io/miniconda.html) installed(please visit [this link](https://conda.io/docs/install/quick.html) for quick installation instructions.)
 
-In order to run the [Visualizations.ipynb](Visualizations.ipynb), [Graphviz][http://www.graphviz.org/] executable must be on the jupyter path. To installed on Mac OS X, use the following brew formula:
+In order to run the [Visualizations.ipynb](Visualizations.ipynb), [Graphviz](http://www.graphviz.org/) executable must be on the jupyter path. To installed on Mac OS X, use the following brew formula:
 
 ```
 brew install graphviz
